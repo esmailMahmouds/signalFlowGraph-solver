@@ -1,4 +1,4 @@
-package model;
+package com.backend.model;
 
 import java.util.Objects;
 

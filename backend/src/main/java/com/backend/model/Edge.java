@@ -1,4 +1,4 @@
-package model;
+package com.backend.model;
 
 public class Edge {
     private Node destination;

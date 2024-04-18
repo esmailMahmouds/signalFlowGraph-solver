@@ -8,12 +8,14 @@ public class SignalFlowGraph {
     private Map<Node, List<Edge>> graph;
     private List<List<String>> forwardPaths;
     private List<List<String>> IndividualLoops;
+    private List<Double> determinants;
 
     public SignalFlowGraph(int numberOfNodes, List<ArrayList<String>> list) {
         this.numberOfNodes = numberOfNodes;
         this.graph = new HashMap<>();
         this.forwardPaths = new ArrayList<>();
         this.IndividualLoops=new ArrayList<>();
+        this.determinants=new ArrayList<>();
         initializeGraph();
         buildGraph(list);
         setForwardPaths();
@@ -55,13 +57,14 @@ public class SignalFlowGraph {
     private void setNonTouchingLoops() { // TODO
 
     }
-    public List<Integer> CalculateDeterminants() { // TODO
-        return null;
+    public List<Double> CalculateDeterminants() {
+        DeterminantUtil determinantUtil=new DeterminantUtil();
+        return determinantUtil.calcDeterminants(forwardPaths,IndividualLoops);
     }
 
-    public double getOverallTransferFunction() { // TODO
-        OverallTransferFunctionUtil overallTransferFunctionUtil=new OverallTransferFunctionUtil();
-        return overallTransferFunctionUtil.calcOverallTransferFunction(forwardPaths,IndividualLoops);
+    public double getOverallTransferFunction() {
+        DeterminantUtil determinantUtil=new DeterminantUtil();
+        return determinantUtil.calcOverallTransferFunction(forwardPaths,determinants);
     }
 
     public List<List<String>> getForwardPaths() {

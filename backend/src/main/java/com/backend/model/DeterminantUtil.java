@@ -3,7 +3,7 @@ package com.backend.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OverallTransferFunctionUtil {
+public class DeterminantUtil {
     public List<List<String>> getNonTouchingLoops(List<List<String>> loops){
         /*ABO ALAA*/ //TODO
         List<List<String>> nonTouchingLoops=new ArrayList<>();

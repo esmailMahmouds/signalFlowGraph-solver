@@ -7,7 +7,7 @@ public class SignalFlowGraph {
     private int numberOfNodes;
     private Map<Node, List<Edge>> graph;
     private List<List<String>> forwardPaths;
-    private List<String> individualLoops;
+    private List<List<String>> individualLoops;
     public SignalFlowGraph(int numberOfNodes, List<ArrayList<String>> list) {
         this.numberOfNodes = numberOfNodes;
         this.graph = new HashMap<>();
@@ -66,7 +66,7 @@ public class SignalFlowGraph {
     public List<List<String>> getForwardPaths() {
         return forwardPaths;
     }
-    public List<String> getIndividualLoops() {
+    public List<List<String>> getIndividualLoops() {
         return individualLoops;
     }
 

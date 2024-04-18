@@ -67,10 +67,6 @@ public class BackendApplication {
         innerList.add("9");
         list.add(innerList);
         innerList = new ArrayList<>();
-        innerList.add("1");
-        innerList.add("2");
-        innerList.add("5");
-        list.add(innerList);
 
 
         SignalFlowGraph signalFlowGraph = new SignalFlowGraph(7, list);

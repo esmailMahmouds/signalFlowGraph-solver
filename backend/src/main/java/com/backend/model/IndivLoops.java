@@ -22,57 +22,54 @@ public class IndivLoops {
     public void calcloops() {
         for (Node node : graph.keySet()) {
             if(!visited.get(node.getId())){
-            dfs(node, node.getId(), new ArrayList<>(),1.0);
+            dfs(node, node.getId(), new StringBuilder(),1.0);
             }
         }
 }
    
-void dfs(Node current, String startId, List<String> path,double gain) {
+void dfs(Node current, String startId, StringBuilder path,double gain) {
         String currentId = current.getId();
         visited.put(currentId, true);
         recStack.put(currentId, true);
-        path.add(currentId);
+        path.append(currentId);
         for (Edge edge : graph.get(current)) {
             Node destination = edge.getDestination();
             String destinationId = destination.getId();
             if (!visited.get(destinationId)) {
                 dfs(destination, startId, path, gain * edge.getGain());
-                System.out.println(gain * edge.getGain());
             } else if (recStack.get(destinationId) && destinationId.equals(startId)) {
                 ArrayList<String> temp = new ArrayList<>();
-                temp.addAll(path);
+                temp.add(path.toString());
                 temp.add(gain * edge.getGain() + "");
                 loops.add(temp);
             }
         }
         recStack.put(currentId, false);
         visited.put(currentId, false);
-        path.remove(path.size() - 1);
-        System.out.println(gain);
-        // removeduplicateLoops();
+        path.deleteCharAt(path.length() - 1);
     
 }
-public static String[] sortEachString(String[] strings) {
-    String[] sortedStrings = new String[strings.length];
-    for (int i = 0; i < strings.length; i++) {
-        char[] chars = strings[i].toCharArray();
+public static List<List<String>> sortEachString(List<List<String>> strings) {
+    List<List<String>> sortedStrings = new ArrayList<>(strings);
+    for (int i = 0; i < strings.size(); i++) {
+        char[] chars = strings.get(i).get(0).toCharArray();
         Arrays.sort(chars);
-        sortedStrings[i] = new String(chars);
+        sortedStrings.get(i).set(0, new String(chars));
     }
-    System.out.println(Arrays.toString(sortedStrings));
     return sortedStrings;
 }
 
-// public Void removeduplicateLoops(){
-//   String[] loop= sortEachString(loops.toArray(String[]::new));
-//    Set<String> set = new HashSet<>();
-//     for (String s : loop) {
-//         set.add(s);
-//     }
-//     loops.clear();
-//     loops.addAll(set);
-//     return null;
-// }
+public Void removeduplicateLoops(){
+  List<List<String>> loop= new ArrayList<>(loops);
+   loop= sortEachString(loop);
+   Set<List<String>> set = new HashSet<>();
+    for (List<String> s : loop) {
+        set.add(s);
+    }
+    loops.clear();
+    loops.addAll(set);
+    return null;
+}
 
 private Node getNode(String id) {
     for (Node node : graph.keySet()) {
@@ -82,6 +79,11 @@ private Node getNode(String id) {
     }
     return null; // Consider what to do if node not found; maybe throw an exception or handle differently
 }
+    void adjustloops(){
+        for(int i=0;i<loops.size();i++){
+            loops.get(i).set(0, new String(loops.get(i).get(0)+loops.get(i).get(0).charAt(0)));
+        }
+    }
     public Map<Node,List<Edge>> getGraph() {
         return this.graph;
     }
@@ -109,6 +111,8 @@ private Node getNode(String id) {
 
     public List<List<String>> getLoops() {
         calcloops();
+        removeduplicateLoops();
+        adjustloops();
         return this.loops;
     }
 

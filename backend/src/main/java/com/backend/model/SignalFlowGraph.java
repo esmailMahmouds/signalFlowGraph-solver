@@ -8,6 +8,7 @@ public class SignalFlowGraph {
     private Map<Node, List<Edge>> graph;
     private List<List<String>> forwardPaths;
     private List<List<String>> individualLoops;
+    private List<List<String>> nontouchingloops;
     public SignalFlowGraph(int numberOfNodes, List<ArrayList<String>> list) {
         this.numberOfNodes = numberOfNodes;
         this.graph = new HashMap<>();
@@ -51,8 +52,9 @@ public class SignalFlowGraph {
         individualLoops = indivLoops.getLoops();
     }
 
-    private void setNonTouchingLoops() { // TODO
-
+    private void setNonTouchingLoops() {
+        IndivLoops nontouchingLoops = new IndivLoops(graph);
+        nontouchingloops =nontouchingLoops.getNonTouchingLoops();
     }
     public List<Integer> CalculateDeterminants() { // TODO
         return null;
@@ -68,6 +70,9 @@ public class SignalFlowGraph {
     }
     public List<List<String>> getIndividualLoops() {
         return individualLoops;
+    }
+    public List<List<String>> getNonTouchingLoops(){
+        return nontouchingloops;
     }
 
     public void printGraph() {

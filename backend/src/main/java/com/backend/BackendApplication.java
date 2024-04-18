@@ -63,20 +63,37 @@ public class BackendApplication {
         list.add(innerList);
         innerList = new ArrayList<>();
         innerList.add("5");
+        innerList.add("6");
+        innerList.add("2");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("6");
+        innerList.add("7");
+        innerList.add("2");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("7");
+        innerList.add("6");
+        innerList.add("3");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("7");
         innerList.add("C");
-        innerList.add("9");
+        innerList.add("2");
         list.add(innerList);
         innerList = new ArrayList<>();
 
 
-        SignalFlowGraph signalFlowGraph = new SignalFlowGraph(7, list);
+        SignalFlowGraph signalFlowGraph = new SignalFlowGraph(9, list);
         signalFlowGraph.printGraph();
 
         List<List<String>> forwardPaths = signalFlowGraph.getForwardPaths();
         System.out.println("Forward Paths:" + forwardPaths);
        
         List<List<String>> loops=signalFlowGraph.getIndividualLoops();
-        System.out.println(loops);
+        System.out.println("Loops:"+loops);
+        List<List<String>> nontouchingloops=signalFlowGraph.getNonTouchingLoops();
+        System.out.println("nontouchingloops:"+nontouchingloops);
     }
 
 }

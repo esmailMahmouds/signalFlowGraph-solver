@@ -7,11 +7,13 @@ public class SignalFlowGraph {
     private int numberOfNodes;
     private Map<Node, List<Edge>> graph;
     private List<List<String>> forwardPaths;
+    private List<List<String>> IndividualLoops;
 
     public SignalFlowGraph(int numberOfNodes, List<ArrayList<String>> list) {
         this.numberOfNodes = numberOfNodes;
         this.graph = new HashMap<>();
         this.forwardPaths = new ArrayList<>();
+        this.IndividualLoops=new ArrayList<>();
         initializeGraph();
         buildGraph(list);
         setForwardPaths();
@@ -58,8 +60,8 @@ public class SignalFlowGraph {
     }
 
     public double getOverallTransferFunction() { // TODO
-
-        return 0;
+        OverallTransferFunctionUtil overallTransferFunctionUtil=new OverallTransferFunctionUtil();
+        return overallTransferFunctionUtil.calcOverallTransferFunction(forwardPaths,IndividualLoops);
     }
 
     public List<List<String>> getForwardPaths() {

@@ -66,6 +66,7 @@ public class BackendApplication {
         innerList.add("C");
         innerList.add("9");
         list.add(innerList);
+        innerList = new ArrayList<>();
 
 
         SignalFlowGraph signalFlowGraph = new SignalFlowGraph(7, list);
@@ -73,6 +74,9 @@ public class BackendApplication {
 
         List<List<String>> forwardPaths = signalFlowGraph.getForwardPaths();
         System.out.println("Forward Paths:" + forwardPaths);
+       
+        List<List<String>> loops=signalFlowGraph.getIndividualLoops();
+        System.out.println(loops);
     }
 
 }

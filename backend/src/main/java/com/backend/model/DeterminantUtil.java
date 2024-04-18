@@ -16,7 +16,7 @@ public class OverallTransferFunctionUtil {
         double sum=0;
         for (List<String> loop: loops)
             sum+=Double.parseDouble(loop.get(1));
-        System.out.println("sum of individual loops: "+sum);
+        System.out.println("sum of individual loops: "+sum);//to be removed
         delta+=1-sum;
         // sum of non touching  loops
         int j=2;
@@ -24,12 +24,12 @@ public class OverallTransferFunctionUtil {
             sum=0;
             for (String x: ntl)
                 sum += Double.parseDouble(x);
-            System.out.println("sum of non touching "+j+" loops: "+sum);
+            System.out.println("sum of non touching "+j+" loops: "+sum);//to be removed
             delta+=Math.pow(-1,j++)*sum;
         }
         return delta;
     }
-    public List<List<String>> loopsNonTouchingPathI(List<String> forwardPath, List<List<String>> loops){
+    private List<List<String>> loopsNonTouchingPathI(List<String> forwardPath, List<List<String>> loops){
         List<List<String>> newLoops=new ArrayList<>();
         //check loops contain node from path i
         //remove loop that contain path i
@@ -52,26 +52,30 @@ public class OverallTransferFunctionUtil {
         }
         return newLoops;
     }
-    private double calcDeltaPathI(List<String> forwardPath, List<List<String>> loops){
-        // calc delta for each forward path( delta i's)
-        List<List<String>> newLoops = loopsNonTouchingPathI(forwardPath, loops);
-        System.out.println("loops Non Touching path : " + newLoops);
-        // apply Method (get non touching) loops from newLoops
-        List<List<String>> nonTouchingLoops=getNonTouchingLoops(newLoops);
-        // apply Method (calc Determinant)
-        double delta=calcDeterminant(newLoops,nonTouchingLoops);
-        return delta;
-    }
-    public double calcOverallTransferFunction(List<List<String>> forwardPaths, List<List<String>> loops){
-        double result=0;
+    public List<Double> calcDeterminants(List<List<String>> forwardPaths, List<List<String>> loops){
+        List<Double> deltas=new ArrayList<>();
         List<List<String>> nonTouchingLoops=getNonTouchingLoops(loops);
         double overallDelta=calcDeterminant(loops,nonTouchingLoops);
-        for (List<String> path: forwardPaths){
-            double deltaI=calcDeltaPathI(path,loops);
-            double gainI=Double.parseDouble(path.get(1));
+        deltas.add(overallDelta);
+        for (List<String> path: forwardPaths) {
+            // calc delta for each forward path( delta i's)
+            List<List<String>> newLoops = loopsNonTouchingPathI(path, loops);
+            System.out.println("loops Non Touching path : " + newLoops);//to be removed
+            // apply Method (get non touching) loops from newLoops
+            nonTouchingLoops = getNonTouchingLoops(newLoops);
+            double tmpDelta = calcDeterminant(newLoops, nonTouchingLoops);
+            deltas.add(tmpDelta);
+        }
+        return deltas;
+    }
+    public double calcOverallTransferFunction(List<List<String>> forwardPaths, List<Double> deltas){
+        double result=0;
+        for (int i=0;i<forwardPaths.size();i++){
+            double deltaI=deltas.get(i+1);
+            double gainI=Double.parseDouble(forwardPaths.get(i).get(1));
             result += deltaI * gainI;
         }
-        result /=overallDelta;
+        result /=deltas.get(0);
         return result;
     }
 }

@@ -8,6 +8,7 @@ public class SignalFlowGraph {
     private Map<Node, List<Edge>> graph;
     private List<List<String>> forwardPaths;
     private List<List<String>> individualLoops;
+    private List<List<String>> nontouchingloops;
     private List<Double> determinants;
 
     public SignalFlowGraph(int numberOfNodes, List<ArrayList<String>> list) {
@@ -55,8 +56,9 @@ public class SignalFlowGraph {
         individualLoops = indivLoops.getLoops();
     }
 
-    private void setNonTouchingLoops() { // TODO
-
+    private void setNonTouchingLoops() {
+        IndivLoops nontouchingLoops = new IndivLoops(graph);
+        nontouchingloops =nontouchingLoops.getNonTouchingLoops();
     }
     public List<Double> CalculateDeterminants() {
         DeterminantUtil determinantUtil=new DeterminantUtil();
@@ -73,6 +75,9 @@ public class SignalFlowGraph {
     }
     public List<List<String>> getIndividualLoops() {
         return individualLoops;
+    }
+    public List<List<String>> getNonTouchingLoops(){
+        return nontouchingloops;
     }
 
     public void printGraph() {

@@ -32,6 +32,7 @@ public class SignalFlowGraph {
     private void addEdge(Node source, Node destination, String gain) {
         Edge edge = new Edge(destination, Double.parseDouble(gain));
         graph.putIfAbsent(source,new ArrayList<>());
+        graph.putIfAbsent(destination,new ArrayList<>());
         graph.get(source).add(edge);
     }
 

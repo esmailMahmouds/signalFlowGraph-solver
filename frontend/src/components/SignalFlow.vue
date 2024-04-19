@@ -34,13 +34,13 @@
       </div>
       </div>
       <div class="overlay" v-if="showmodal"></div>
-      <div class="modal" style="width: 1900px; height: 1100px; background-color: cyan;">
+      <!-- <div class="modal" style="width: 1900px; height: 1100px; background-color: cyan;"> -->
         <!-- <div style="display: flex; flex-direction: row; margin-top: 25px; margin-left: 35px;">
         <p style="font-size: 25px; ">Enter branch gain: </p>
         <InputNumber style=" font-size:larger; width: 150px; height: 40px; position: relative; margin-top: 18px; margin-left: 5px;" v-model="gainamount" inputId="minmax" :min="-200" :max="200" /> 
         <button @click="connect" style="margin-left: 75px;">Ok</button>
       </div> -->
-    </div>
+    <!-- </div> -->
       
 
     </div>
@@ -280,12 +280,21 @@
   
       simulate(){
         console.table(this.adjacency);
-        const body={architecture:this.adjacency}
-        axios.post(`http://localhost:8081/construct/${this.number}`,body);
-        this.startFetchData1();
+        // const body={architecture:this.adjacency}
+        let stringArray = this.adjacency.map(subArray => 
+    subArray.map(element => element.toString())
+);
+
+        axios.post(`http://localhost:8080/create?numberOfNodes=${this.numnodes}`,stringArray);
   
+        setTimeout(() => {
+          axios.get(`http://localhost:8080/forwardPaths`).then(response => {
+    
+    console.log(response.data);  })
+}, 1000);
+
+        
   
-  //
       },
   
   
@@ -365,12 +374,6 @@
       
      
        if(this.tr.nodes().length==2){
-  
-        
-       
-      
-        // console.log('lolo')
-        // console.log(this.tr.nodes()[1].x());
   
         const line = new Konva.Line({
             points: [this.tr.nodes()[1].x()+100,this.tr.nodes()[1].y()+50,

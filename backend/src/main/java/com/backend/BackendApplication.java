@@ -94,6 +94,11 @@ public class BackendApplication {
         System.out.println("Loops:"+loops);
         List<List<String>> nontouchingloops=signalFlowGraph.getNonTouchingLoops();
         System.out.println("nontouchingloops:"+nontouchingloops);
+
+        List<Double> determinants=signalFlowGraph.getDeterminants();
+        System.out.println("Determinants: "+determinants);
+        double overallGain=signalFlowGraph.getOverallTransferFunction();
+        System.out.println("Overall gain: "+overallGain);
     }
 
 }

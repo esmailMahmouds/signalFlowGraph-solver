@@ -22,6 +22,7 @@ public class SignalFlowGraph {
         setForwardPaths();
         setIndividualLoops();
         setNonTouchingLoops();
+        calculateDeterminants();
     }
     private void initializeGraph() {
         Node source = new Node("R");
@@ -60,13 +61,15 @@ public class SignalFlowGraph {
         IndivLoops nontouchingLoops = new IndivLoops(graph);
         nontouchingloops =nontouchingLoops.getNonTouchingLoops(individualLoops);
     }
-    public List<Double> CalculateDeterminants() {
-        DeterminantUtil determinantUtil=new DeterminantUtil();
-        return determinantUtil.calcDeterminants(forwardPaths,individualLoops);
+    public void calculateDeterminants() {
+        IndivLoops indivLoops=new IndivLoops(graph);
+        DeterminantUtil determinantUtil=new DeterminantUtil(indivLoops);
+        determinants =determinantUtil.calcDeterminants(forwardPaths,individualLoops);
     }
 
     public double getOverallTransferFunction() {
-        DeterminantUtil determinantUtil=new DeterminantUtil();
+        IndivLoops indivLoops=new IndivLoops(graph);
+        DeterminantUtil determinantUtil=new DeterminantUtil(indivLoops);
         return determinantUtil.calcOverallTransferFunction(forwardPaths,determinants);
     }
 
@@ -79,7 +82,9 @@ public class SignalFlowGraph {
     public List<List<String>> getNonTouchingLoops(){
         return nontouchingloops;
     }
-
+    public List<Double> getDeterminants(){
+        return determinants;
+    }
     public void printGraph() {
         for (Map.Entry<Node, List<Edge>> entry : graph.entrySet()) {
             Node node = entry.getKey();

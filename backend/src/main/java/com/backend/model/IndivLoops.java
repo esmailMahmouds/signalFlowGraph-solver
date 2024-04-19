@@ -127,8 +127,7 @@ private Node getNode(String id) {
         return false;
     }
 
-    public List<List<String>> getNonTouchingLoops(){
-        List<List<String>> loops=getLoops();
+    public List<List<String>> getNonTouchingLoops(List<List<String>> loops){
         List<List<String>> nonTouchingLoops=new ArrayList<>();
         int count=1;
         System.out.println(loops.size());

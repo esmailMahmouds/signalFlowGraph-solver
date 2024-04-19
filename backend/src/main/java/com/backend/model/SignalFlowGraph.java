@@ -58,7 +58,7 @@ public class SignalFlowGraph {
 
     private void setNonTouchingLoops() {
         IndivLoops nontouchingLoops = new IndivLoops(graph);
-        nontouchingloops =nontouchingLoops.getNonTouchingLoops();
+        nontouchingloops =nontouchingLoops.getNonTouchingLoops(individualLoops);
     }
     public List<Double> CalculateDeterminants() {
         DeterminantUtil determinantUtil=new DeterminantUtil();

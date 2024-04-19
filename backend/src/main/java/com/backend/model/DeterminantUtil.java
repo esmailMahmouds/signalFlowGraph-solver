@@ -14,7 +14,6 @@ public class DeterminantUtil {
         double delta=0,sum=0;
         for (List<String> loop: loops)
             sum+=Double.parseDouble(loop.get(1));
-        System.out.println("sum of individual loops: "+sum);//to be removed
         delta+=1-sum;
         // sum of non touching  loops
         int j=2;
@@ -24,13 +23,11 @@ public class DeterminantUtil {
                 sum += Double.parseDouble(ntl.get(ntl.size()-1));
             }
             else{
-                System.out.println("sum of non touching "+j+" loops: "+sum);//to be removed
                 delta+=Math.pow(-1,j++)*sum;
                 //start non-touching j+1 loop
                 sum= Double.parseDouble(ntl.get(ntl.size()-1));
             }
         }
-        System.out.println("sum of non touching "+j+" loops: "+sum);//to be removed
         delta+=Math.pow(-1,j++)*sum;
         return delta;
     }
@@ -65,7 +62,6 @@ public class DeterminantUtil {
         for (List<String> path: forwardPaths) {
             // calc delta for each forward path( delta i's)
             List<List<String>> newLoops = loopsNonTouchingPathI(path, loops);
-            System.out.println("loops Non Touching path : " + newLoops);//to be removed
             // apply Method (get non touching) loops from newLoops
             nonTouchingLoops = indivLoops.getNonTouchingLoops(newLoops);
             double tmpDelta = calcDeterminant(newLoops, nonTouchingLoops);

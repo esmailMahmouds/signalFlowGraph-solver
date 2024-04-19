@@ -1,4 +1,7 @@
-package com.backend.model;
+package com.backend.service;
+
+import com.backend.model.Edge;
+import com.backend.model.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;

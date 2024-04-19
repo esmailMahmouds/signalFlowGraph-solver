@@ -17,24 +17,11 @@ public class SignalFlowGraph {
         this.forwardPaths = new ArrayList<>();
         this.individualLoops=new ArrayList<>();
         this.determinants=new ArrayList<>();
-        initializeGraph();
         buildGraph(list);
         setForwardPaths();
         setIndividualLoops();
         setNonTouchingLoops();
         calculateDeterminants();
-    }
-    private void initializeGraph() {
-        Node source = new Node("R");
-        graph.put(source, new ArrayList<>());
-
-        for (int i = 1; i <= numberOfNodes-2; i++) {
-            Node node = new Node(String.valueOf(i));
-            graph.put(node, new ArrayList<>());
-        }
-
-        Node destination = new Node("C");
-        graph.put(destination, new ArrayList<>());
     }
 
     public void buildGraph(List<ArrayList<String>> list) {
@@ -44,6 +31,7 @@ public class SignalFlowGraph {
     }
     private void addEdge(Node source, Node destination, String gain) {
         Edge edge = new Edge(destination, Double.parseDouble(gain));
+        graph.putIfAbsent(source,new ArrayList<>());
         graph.get(source).add(edge);
     }
 

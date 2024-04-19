@@ -1,14 +1,16 @@
 <template>
-  <div>sginal flow  graph</div>
+ <SignalFlow/>
 </template>
 
 <script>
+import SignalFlow from './components/SignalFlow.vue'
+
 
 
 export default {
   name: 'App',
   components: {
-    
+    SignalFlow
   }
 }
 </script>

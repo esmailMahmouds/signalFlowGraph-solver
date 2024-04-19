@@ -63,16 +63,77 @@ public class BackendApplication {
         list.add(innerList);
         innerList = new ArrayList<>();
         innerList.add("5");
-        innerList.add("C");
+        innerList.add("6");
+        innerList.add("2");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("6");
+        innerList.add("7");
+        innerList.add("2");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("7");
+        innerList.add("6");
+        innerList.add("3");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("R");
+        innerList.add("8");
+        innerList.add("3");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("8");
         innerList.add("9");
+        innerList.add("10");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("9");
+        innerList.add("8");
+        innerList.add("15");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("9");
+        innerList.add("a");
+        innerList.add("20");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("a");
+        innerList.add("b");
+        innerList.add("30");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("b");
+        innerList.add("a");
+        innerList.add("14");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("b");
+        innerList.add("C");
+        innerList.add("1");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("7");
+        innerList.add("C");
+        innerList.add("2");
         list.add(innerList);
 
 
-        SignalFlowGraph signalFlowGraph = new SignalFlowGraph(7, list);
+
+        SignalFlowGraph signalFlowGraph = new SignalFlowGraph(13, list);
         signalFlowGraph.printGraph();
 
         List<List<String>> forwardPaths = signalFlowGraph.getForwardPaths();
         System.out.println("Forward Paths:" + forwardPaths);
+       
+        List<List<String>> loops=signalFlowGraph.getIndividualLoops();
+        System.out.println("Loops:"+loops);
+        List<List<String>> nontouchingloops=signalFlowGraph.getNonTouchingLoops();
+        System.out.println("nontouchingloops:"+nontouchingloops);
+
+        List<Double> determinants=signalFlowGraph.getDeterminants();
+        System.out.println("Determinants: "+determinants);
+        double overallGain=signalFlowGraph.getOverallTransferFunction();
+        System.out.println("Overall gain: "+overallGain);
     }
 
 }

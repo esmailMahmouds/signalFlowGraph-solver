@@ -4,29 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeterminantUtil {
-    public List<List<String>> getNonTouchingLoops(List<List<String>> loops){
-        /*ABO ALAA*/ //TODO
-        List<List<String>> nonTouchingLoops=new ArrayList<>();
-        //[ [g12,g13,g14]  ,   [g123,g234] ]
-        //[ [gains of 2nonTouching], [gains of 3nonTouching], ...]
-        return nonTouchingLoops;
+    IndivLoops indivLoops;
+
+    public DeterminantUtil(IndivLoops indivLoops) {
+        this.indivLoops = indivLoops;
     }
+
     private double calcDeterminant (List<List<String>> loops,List<List<String>> nonTouchingLoops){
-        double delta=0;
-        double sum=0;
+        double delta=0,sum=0;
         for (List<String> loop: loops)
             sum+=Double.parseDouble(loop.get(1));
         System.out.println("sum of individual loops: "+sum);//to be removed
         delta+=1-sum;
         // sum of non touching  loops
         int j=2;
+        sum=0;
         for (List<String> ntl: nonTouchingLoops){
-            sum=0;
-            for (String x: ntl)
-                sum += Double.parseDouble(x);
-            System.out.println("sum of non touching "+j+" loops: "+sum);//to be removed
-            delta+=Math.pow(-1,j++)*sum;
+            if((ntl.size()-1)==j) { //non-touching j loops
+                sum += Double.parseDouble(ntl.get(ntl.size()-1));
+            }
+            else{
+                System.out.println("sum of non touching "+j+" loops: "+sum);//to be removed
+                delta+=Math.pow(-1,j++)*sum;
+                //start non-touching j+1 loop
+                sum= Double.parseDouble(ntl.get(ntl.size()-1));
+            }
         }
+        System.out.println("sum of non touching "+j+" loops: "+sum);//to be removed
+        delta+=Math.pow(-1,j++)*sum;
         return delta;
     }
     private List<List<String>> loopsNonTouchingPathI(List<String> forwardPath, List<List<String>> loops){
@@ -34,10 +39,10 @@ public class DeterminantUtil {
         //check loops contain node from path i
         //remove loop that contain path i
         int i=0;
-        String[] pathNodes=forwardPath.get(0).split(",");
+        String[] pathNodes=forwardPath.get(0).split("");
         for (List<String> loop:loops){
             boolean found=false;
-            String[] loopNodes=loop.get(0).split(",");
+            String[] loopNodes=loop.get(0).split("");
             //check if the loopNodes in the pathNodes
             //if Not found add to new loops
             for (String loopNode: loopNodes){
@@ -54,7 +59,7 @@ public class DeterminantUtil {
     }
     public List<Double> calcDeterminants(List<List<String>> forwardPaths, List<List<String>> loops){
         List<Double> deltas=new ArrayList<>();
-        List<List<String>> nonTouchingLoops=getNonTouchingLoops(loops);
+        List<List<String>> nonTouchingLoops=indivLoops.getNonTouchingLoops(loops);
         double overallDelta=calcDeterminant(loops,nonTouchingLoops);
         deltas.add(overallDelta);
         for (List<String> path: forwardPaths) {
@@ -62,7 +67,7 @@ public class DeterminantUtil {
             List<List<String>> newLoops = loopsNonTouchingPathI(path, loops);
             System.out.println("loops Non Touching path : " + newLoops);//to be removed
             // apply Method (get non touching) loops from newLoops
-            nonTouchingLoops = getNonTouchingLoops(newLoops);
+            nonTouchingLoops = indivLoops.getNonTouchingLoops(newLoops);
             double tmpDelta = calcDeterminant(newLoops, nonTouchingLoops);
             deltas.add(tmpDelta);
         }

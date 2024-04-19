@@ -116,54 +116,6 @@ private Node getNode(String id) {
         return this.loops;
     }
     
-    // private boolean areLoopsTouching(String loop1,String loop2) {
-    //     for(int i=0;i<loop1.length();i++){
-    //         for(int j=0;j<loop2.length();j++){
-    //             if(loop1.charAt(i)==loop2.charAt(j)){
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    // public List<List<String>> getNonTouchingLoops(){
-    //     List<List<String>> loops=getLoops();
-    //     List<List<String>> nonTouchingLoops=new ArrayList<>();
-    //     int count=1;
-    //     System.out.println(loops.size());
-    //     while(count!=0){
-    //         count=0;
-    //         for(int i=0;i<loops.size();i++){
-    //             for(int j=i+1;j<loops.size();j++){
-    //                 if(!areLoopsTouching(loops.get(i).get(0), loops.get(j).get(0))){
-    //                     List<String> twoNonTouching= new ArrayList<>();
-    //                     twoNonTouching.add(loops.get(i).get(0));
-    //                     twoNonTouching.add(loops.get(j).get(0));
-    //                     twoNonTouching.add(String.valueOf(Double.parseDouble(loops.get(i).get(1)) * Double.parseDouble(loops.get(j).get(1))));
-    //                     nonTouchingLoops.add(twoNonTouching);
-    //                 }
-    //             }
-    //         }
-    //         for(int i=0;i<loops.size();i++){
-    //             for(int j=i+1;j<loops.size();j++){
-    //                 for(int k=j+1;k<loops.size();k++){
-    //                     if(!areLoopsTouching(loops.get(i).get(0), loops.get(j).get(0)) && !areLoopsTouching(loops.get(i).get(0), loops.get(k).get(0)) && !areLoopsTouching(loops.get(j).get(0), loops.get(k).get(0))){
-    //                         List<String> threeNonTouching= new ArrayList<>();
-    //                         threeNonTouching.add(loops.get(i).get(0));
-    //                         threeNonTouching.add(loops.get(j).get(0));
-    //                         threeNonTouching.add(loops.get(k).get(0));
-    //                         threeNonTouching.add(String.valueOf(Double.parseDouble(loops.get(i).get(1))* Double.parseDouble(loops.get(j).get(1))*Double.parseDouble(loops.get(k).get(1))));
-    //                         nonTouchingLoops.add(threeNonTouching);
-    //                     }
-    //                 }
-    //             }
-    //         }
-
-    //     }
-    //     return nonTouchingLoops;
-
-    // }
     private boolean areLoopsTouching(List<String> loop1,List<String> loop2) {
         for(int k=0;k<loop1.size()-1;k++){
         for(int i=0;i<loop1.get(k).length();i++){

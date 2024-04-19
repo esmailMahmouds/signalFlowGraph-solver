@@ -2,7 +2,6 @@ package com.backend.controller;
 
 
 import com.backend.service.GraphService;
-import com.backend.service.ListRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

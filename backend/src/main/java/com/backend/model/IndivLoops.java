@@ -153,7 +153,6 @@ private Node getNode(String id) {
             for(int i=f;i<l;i++){
                 for(int j=0;j<loops.size();j++){
                     if(!areLoopsTouching(nonTouchingLoops.get(i), loops.get(j))){
-                        count++;
                         List<String> nonTouching=new ArrayList<>();
 
                         for(int k=0;k<nonTouchingLoops.get(i).size()-1;k++){
@@ -174,6 +173,7 @@ private Node getNode(String id) {
                             temp=0;
                             if(y==nonTouchingLoops.size()-1){
                                 nonTouchingLoops.add(nonTouching);
+                                count++;
                             }
                         }
                         

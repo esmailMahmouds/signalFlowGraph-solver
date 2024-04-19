@@ -82,9 +82,44 @@ public class BackendApplication {
         innerList.add("2");
         list.add(innerList);
         innerList = new ArrayList<>();
+        innerList.add("R");
+        innerList.add("8");
+        innerList.add("3");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("8");
+        innerList.add("9");
+        innerList.add("10");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("9");
+        innerList.add("10");
+        innerList.add("20");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("10");
+        innerList.add("11");
+        innerList.add("30");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("11");
+        innerList.add("C");
+        innerList.add("1");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("9");
+        innerList.add("8");
+        innerList.add("15");
+        list.add(innerList);
+        innerList = new ArrayList<>();
+        innerList.add("11");
+        innerList.add("10");
+        innerList.add("14");
+        list.add(innerList);
+        innerList = new ArrayList<>();
 
 
-        SignalFlowGraph signalFlowGraph = new SignalFlowGraph(9, list);
+        SignalFlowGraph signalFlowGraph = new SignalFlowGraph(13, list);
         signalFlowGraph.printGraph();
 
         List<List<String>> forwardPaths = signalFlowGraph.getForwardPaths();

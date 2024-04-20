@@ -160,7 +160,8 @@ private Node getNode(String id) {
                             nonTouching.add(nonTouchingLoops.get(i).get(k));
                         }
                         nonTouching.add(loops.get(j).get(0));
-                        nonTouching.add(String.valueOf(Double.parseDouble(nonTouchingLoops.get(i).get(nonTouchingLoops.get(i).size()-1)) * Double.parseDouble(loops.get(j).get(1))));
+                        double result = Double.parseDouble(nonTouchingLoops.get(i).get(nonTouchingLoops.get(i).size() - 1)) * Double.parseDouble(loops.get(j).get(1));
+                        nonTouching.add(String.format("%.5f", result));
                         int temp=0;
                         for(int y=0;y<nonTouchingLoops.size();y++){
                                 for(int t=0;t<nonTouching.size();t++){

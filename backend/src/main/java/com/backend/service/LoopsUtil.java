@@ -1,14 +1,16 @@
-package com.backend.model;
-import java.util.*;
-import com.backend.model.*;
+package com.backend.service;
+import com.backend.model.Edge;
+import com.backend.model.Node;
 
-public class IndivLoops {
+import java.util.*;
+
+public class LoopsUtil {
     private Map<Node,List<Edge>>graph;
     private Map<String,Boolean> visited;
     private Map<String,Boolean> recStack;
     private List<List<String>>loops;
 
-    public IndivLoops(Map<Node,List<Edge>>graph){
+    public LoopsUtil(Map<Node,List<Edge>>graph){
         this.graph=graph;
         this.recStack=new HashMap<>();
         this.visited=new HashMap<>();

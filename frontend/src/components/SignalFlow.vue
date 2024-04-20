@@ -23,6 +23,8 @@
   
         <div class="sim-controls">
           <button @click="simulate" style="margin-right: 10px;" class="pi pi-play"></button>
+          <button @click="showresult=!showresult" style="margin-right: 10px;" class="pi pi-eye"></button>
+
           <!-- <button style="margin-right: 10px;" class="pi pi-stop"></button> -->
         </div>
       </div>
@@ -34,12 +36,30 @@
       </div>
       </div>
       <div class="overlay" v-if="showmodal"></div>
-      <div class="modal" style="width: 1900px; height: 1100px; background-color: cyan;">
-        <!-- <div style="display: flex; flex-direction: row; margin-top: 25px; margin-left: 35px;">
-        <p style="font-size: 25px; ">Enter branch gain: </p>
-        <InputNumber style=" font-size:larger; width: 150px; height: 40px; position: relative; margin-top: 18px; margin-left: 5px;" v-model="gainamount" inputId="minmax" :min="-200" :max="200" /> 
-        <button @click="connect" style="margin-left: 75px;">Ok</button>
-      </div> -->
+      <div v-if="showresult" class="modal" style="width: 1900px; height: 1400px; background-color: cyan; ">
+        <p style="font-size: 50px; font-weight: 600;">Final Values</p>
+        <p style="font-weight: 550; display: flex; margin-left: 25px; align-items: flex-start; font-size: 35px; ">Forward Paths:</p>
+        <div style="display: flex; flex-direction: column; justify-content:flex-start; align-items: flex-start; margin-left: 25px; margin-top: -25px; margin-right: 25px; font-size: 30px; overflow-y: auto; height: 200px; background-color: gray; border: 5px solid #000;;">
+        
+        <div v-for="(path, index) in forwardPaths" :key="index" style="margin-left: 10px;" >
+        <div style="display: flex; justify-content: space-between;">
+        <h3>Path {{ index+1 }} </h3>
+        <h3  style="margin-left:677px;">{{ path[0] }}</h3>
+        <h3 style="margin-left:840px;">Gain={{ path[1] }}</h3>
+        </div>
+        <!-- <button class="flag-btn" v-if="task.priority"><i class="pi pi-flag"></i></button>
+        <button class="view-btn" @click="view(index)"><i class="pi pi-eye"></i></button>
+        <button  @click="editTask(index)" class="edit-btn"  ><i class="pi pi-pencil"></i></button>
+        <button class="delete-btn" @click="deleteTask(index)"><i class="pi pi-trash"></i> </button>
+        <hr :style="{ 'top': getTopPosition(index) + '%', 'border-color': '#d0cdcd', 'height': '2px', 'border-width': '0 0 2px 0'}"> -->
+  
+        
+  
+      </div>
+        </div>
+        <p style="font-weight: 550; display: flex; margin-left: 25px; align-items: flex-start; font-size: 35px; ">Forward Paths:</p>
+<!-- continue here -->
+        
     </div>
       
 
@@ -72,10 +92,12 @@
       selected:[],
       adjacency:[],
       linelist:[],
+      forwardPaths:[],
       numnodes:2,
       gains:1,
       gainamount:1,
       showmodal:false,
+      showresult:false,
   
     };
   },
@@ -100,6 +122,12 @@
        this.tr.enabledAnchors([]);
        this.tr.rotateEnabled(false); // Disable rotation
       this.tr.anchorCornerRadius(0);
+      this.forwardPaths.push(["p1","abc",30]);
+      this.forwardPaths.push(["p2","bcd",15]);
+      // this.forwardPaths.push(["p2",15]);
+      // this.forwardPaths.push(["p2",15]);
+      // this.forwardPaths.push(["p2",15]);
+
   
   
       // Set up an interval to call the fetchData function every 100 milliseconds
@@ -280,12 +308,23 @@
   
       simulate(){
         console.table(this.adjacency);
-        const body={architecture:this.adjacency}
-        axios.post(`http://localhost:8081/construct/${this.number}`,body);
-        this.startFetchData1();
+        // const body={architecture:this.adjacency}
+        let stringArray = this.adjacency.map(subArray => 
+    subArray.map(element => element.toString())
+);
+
+        axios.post(`http://localhost:8080/create?numberOfNodes=${this.numnodes}`,stringArray);
   
+        setTimeout(() => {
+          axios.get(`http://localhost:8080/forwardPaths`).then(response => {
+    
+    console.log(response.data); 
+    this.forwardPaths=response.data;
+    })
+}, 1000);
+
+        
   
-  //
       },
   
   
@@ -366,12 +405,6 @@
      
        if(this.tr.nodes().length==2){
   
-        
-       
-      
-        // console.log('lolo')
-        // console.log(this.tr.nodes()[1].x());
-  
         const line = new Konva.Line({
             points: [this.tr.nodes()[1].x()+100,this.tr.nodes()[1].y()+50,
              this.tr.nodes()[0].x(), this.tr.nodes()[0].y()],
@@ -389,7 +422,7 @@
   
           // Redraw the layer
           this.layer.draw();
-          this.adjacency.push([this.tr.nodes()[0].children[0].id(),this.tr.nodes()[1].children[0].id(),this.gainamount]);
+          this.adjacency.push([this.tr.nodes()[0].children[1].text(),this.tr.nodes()[1].children[1].text(),this.gainamount]);
           this.gainamount=1;
           this.showmodal=false;
           // this.adjacency[this.tr.nodes()[0].children[0].id()][this.tr.nodes()[1].children[0].id()]=1;
@@ -446,7 +479,7 @@
             draggable: true,
             id:this.nodes.length,
         }));
-        let x ="temp";
+        let x ="a";
         if(this.nodes.length===0)
         {
             x = "R";
@@ -456,7 +489,9 @@
         x = "C";
       }
       else{
-        x = "V"+this.nodes.length;
+        var code = x.charCodeAt(0);
+        code+=this.nodes.length-1;
+        x=String.fromCharCode(code);
       }
         circle.add(new Konva.Text({
             text:x,

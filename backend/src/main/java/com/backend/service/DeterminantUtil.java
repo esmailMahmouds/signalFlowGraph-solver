@@ -1,12 +1,12 @@
-package com.backend.model;
+package com.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeterminantUtil {
-    IndivLoops indivLoops;
+    LoopsUtil indivLoops;
 
-    public DeterminantUtil(IndivLoops indivLoops) {
+    public DeterminantUtil(LoopsUtil indivLoops) {
         this.indivLoops = indivLoops;
     }
 

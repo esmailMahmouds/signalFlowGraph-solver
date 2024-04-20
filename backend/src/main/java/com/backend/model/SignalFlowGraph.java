@@ -1,5 +1,9 @@
 package com.backend.model;
 
+import com.backend.service.DeterminantUtil;
+import com.backend.service.ForwardPathsUtil;
+import com.backend.service.LoopsUtil;
+
 import java.util.*;
 
 public class SignalFlowGraph {
@@ -42,23 +46,23 @@ public class SignalFlowGraph {
     }
 
     private void setIndividualLoops() {
-        IndivLoops indivLoops = new IndivLoops(graph);
+        LoopsUtil indivLoops = new LoopsUtil(graph);
         individualLoops = indivLoops.getLoops();
     }
 
     private void setNonTouchingLoops() {
-        IndivLoops nontouchingLoops = new IndivLoops(graph);
-        nontouchingloops =nontouchingLoops.getNonTouchingLoops(individualLoops);
+        LoopsUtil nonTouchingLoops = new LoopsUtil(graph);
+        nontouchingloops = nonTouchingLoops.getNonTouchingLoops(individualLoops);
     }
     public void calculateDeterminants() {
-        IndivLoops indivLoops=new IndivLoops(graph);
-        DeterminantUtil determinantUtil=new DeterminantUtil(indivLoops);
-        determinants =determinantUtil.calcDeterminants(forwardPaths,individualLoops);
+        LoopsUtil indivLoops = new LoopsUtil(graph);
+        DeterminantUtil determinantUtil = new DeterminantUtil(indivLoops);
+        determinants = determinantUtil.calcDeterminants(forwardPaths,individualLoops);
     }
 
     public double getOverallTransferFunction() {
-        IndivLoops indivLoops=new IndivLoops(graph);
-        DeterminantUtil determinantUtil=new DeterminantUtil(indivLoops);
+        LoopsUtil indivLoops = new LoopsUtil(graph);
+        DeterminantUtil determinantUtil = new DeterminantUtil(indivLoops);
         return determinantUtil.calcOverallTransferFunction(forwardPaths,determinants);
     }
 

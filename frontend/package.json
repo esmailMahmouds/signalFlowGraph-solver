@@ -13,8 +13,13 @@
     "konva": "^9.3.6",
     "primeicons": "^7.0.0",
     "primevue": "^3.51.0",
+<<<<<<< HEAD
     "v-network-graph": "^0.9.15",
     "vue": "^3.2.13"
+=======
+    "vue": "^3.2.13",
+    "vue-konva": "^3.0.2"
+>>>>>>> 12861124a114e69dc864ca8dd7162fa1405ed861
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

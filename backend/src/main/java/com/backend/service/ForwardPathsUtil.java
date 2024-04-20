@@ -20,12 +20,12 @@ public class ForwardPathsUtil {
     }
 
     public List<List<String>>  getForwardPaths() {
-        dfs(new Node("0"), new StringBuilder(), 1.0);
+        dfs(new Node("R"), new StringBuilder(), 1.0);
         return forwardPaths;
     }
 
     private void dfs(Node node, StringBuilder path, double pathGain) {
-        if (node.getId().equals(String.valueOf(graph.size()-1))) {
+        if (node.getId().equals("C")) {
             path.append(node.getId());
             List<String> list = new ArrayList<>();
             list.add(path.toString());
